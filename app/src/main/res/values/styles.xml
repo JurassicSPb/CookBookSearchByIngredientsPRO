@@ -1,0 +1,80 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name = "windowActionBar">false</item>
+        <item name = "windowNoTitle">true</item>
+        <item name="drawerArrowStyle">@style/MyDrawerArrowToggle</item>
+    </style>
+
+    <style name="ToolBarStyle.Event" parent="">
+        <item name="titleTextAppearance">@style/TextAppearance.Widget.Event.Toolbar.Title</item>
+    </style>
+
+    <style name="TextAppearance.Widget.Event.Toolbar.Title" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColor">@color/toolbarTextColor</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/toolbar_textsize</item>
+    </style>
+
+    <style name="MyDrawerArrowToggle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="color">@color/toolbarTextColor</item>
+    </style>
+
+    <style name="MineCustomTabText" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">sans-serif</item>
+
+    </style>
+
+    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_screen_layers</item>
+        <item name = "windowActionBar">false</item>
+        <item name = "windowNoTitle">true</item>
+    </style>
+
+    <style name="ProgressBarTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/progressbar_layers</item>
+    </style>
+
+    <style name="DetailRecipeTheme" parent="Theme.AppCompat.Light.NoActionBar">
+
+    </style>
+
+    <style name="CollapsedAppBar" parent="android:TextAppearance">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColor">@color/toolbarTextColor</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="ExpandedAppBar" parent="android:TextAppearance">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColor">@color/toolbarTextColor</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">21sp</item>
+    </style>
+
+    <style name="custom_dialog_theme">
+        <item name="android:windowBackground">@color/dialog_background_color</item>
+    </style>
+
+    <style name="checkBoxForIngrsToBuy" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@android:color/black</item>
+        <item name="colorControlActivated">@android:color/holo_green_light</item>
+    </style>
+
+    <style name="NavigationViewStylePhones">
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="NavigationViewStyleTablets">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+</resources>

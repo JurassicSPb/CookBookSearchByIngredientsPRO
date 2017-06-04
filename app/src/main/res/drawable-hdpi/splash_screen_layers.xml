@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item>
+        <shape>
+            <gradient
+                android:angle="90"
+                android:centerColor="#A52A2A"
+                android:endColor="#800000"
+                android:startColor="#8B0000"
+                android:type="linear"/>
+            <corners
+                android:radius="0dp"/>
+        </shape>
+    </item>
+
+    <item
+        android:bottom="155dp">
+        <bitmap
+            android:gravity="center"
+            android:src="@drawable/ezhik_phones"/>
+    </item>
+    <item
+        android:bottom="10dp">
+        <bitmap
+            android:gravity="bottom"
+            android:src="@drawable/splash_phones"/>
+    </item>
+
+</layer-list>

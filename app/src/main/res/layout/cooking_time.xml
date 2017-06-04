@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <android.support.v7.widget.Toolbar
+        style="@style/ToolBarStyle.Event"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        <TableLayout
+            android:id="@+id/tableLayoutPorridge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:stretchColumns="*"
+            android:shrinkColumns="*">
+        </TableLayout>
+
+        <TableLayout
+            android:id="@+id/tableLayoutMeat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:stretchColumns="*"
+            android:shrinkColumns="*">
+        </TableLayout>
+
+            <TableLayout
+                android:id="@+id/tableLayoutFish"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:stretchColumns="*"
+                android:shrinkColumns="*">
+            </TableLayout>
+
+            <TableLayout
+                android:id="@+id/tableLayoutBird"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:stretchColumns="*"
+                android:shrinkColumns="*">
+            </TableLayout>
+
+            <TableLayout
+                android:id="@+id/tableLayoutVegetables"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:stretchColumns="*"
+                android:shrinkColumns="*">
+            </TableLayout>
+
+            <TableLayout
+                android:id="@+id/tableLayoutOther"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:stretchColumns="*"
+                android:shrinkColumns="*">
+            </TableLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

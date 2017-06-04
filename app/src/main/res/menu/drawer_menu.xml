@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:id="@+id/grp1" >
+    <item
+        android:id="@+id/fr1"
+        android:icon="@drawable/ic_drawer_favorites"
+        android:title="@string/drawer_menu_favorites" />
+        <item
+            android:id="@+id/fr7"
+            android:icon="@drawable/ic_fav_ingr"
+            android:title="@string/drawer_menu_ingr_favorites" />
+        <item
+            android:id="@+id/fr6"
+            android:icon="@drawable/ic_category"
+            android:title="@string/categories" />
+    <item
+        android:id="@+id/fr2"
+        android:icon="@drawable/ic_full_list"
+        android:title="@string/drawer_menu_full_list" />
+
+        <item
+            android:id="@+id/fr8"
+            android:icon="@drawable/ic_ingredients_to_buy"
+            android:title="@string/shopping_list" />
+    </group>
+
+    <group android:id="@+id/grp2" >
+        <item
+            android:id="@+id/fr4"
+            android:icon="@drawable/ic_weights"
+            android:title="@string/weights" />
+        <item
+            android:id="@+id/fr5"
+            android:icon="@drawable/ic_timer"
+            android:title="@string/cooking_time" />
+    </group>
+
+    <group android:id="@+id/grp3">
+        <item
+            android:id="@+id/fr9"
+            android:icon="@drawable/ic_vk"
+            android:title="@string/drawer_menu_vk" />
+        <item
+            android:id="@+id/fr3"
+            android:icon="@drawable/ic_close"
+            android:title="@string/drawer_menu_exit" />
+    </group>
+
+
+</menu>
