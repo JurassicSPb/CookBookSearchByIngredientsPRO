@@ -90,7 +90,7 @@ public class IngedientTablayoutActivity extends AppCompatActivity implements Nav
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         ViewPager pager = (ViewPager) findViewById(R.id.pager);
 
-        pager.setOffscreenPageLimit(6);
+        pager.setOffscreenPageLimit(10);
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
