@@ -78,7 +78,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
         getSupportActionBar().setTitle(names);
 
-        favorites = favoritesDB.getFavorite(names);
+        favorites = favoritesDB.getFavorite(id);
 
         ImageView largeImage = (ImageView) findViewById(R.id.large_image);
         image = intent.getStringExtra("photo");
@@ -160,7 +160,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
                     toast.setGravity(Gravity.CENTER, 0, 0);
                     toast.show();
                 } else if (favorites.size() == 1) {
-                    favoritesDB.deleteFavoritePosition(names);
+                    favoritesDB.deleteFavoritePosition(id);
 
                     if (Metrics.smallestWidth()>600) {
                         myDrawable = ContextCompat.getDrawable(this, R.drawable.ic_favourites_tablets);
