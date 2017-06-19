@@ -55,6 +55,12 @@ public class IngredientFavoritesActivity extends AppCompatActivity {
 
         ingrFavoritesDB = new IngredientDatabase();
 
+        MyPreferences preferences = new MyPreferences(this);
+        if (preferences.getFlagIngrFavV1_2()) {
+            updateIngredientFavorites();
+            preferences.setFlagIngrFavV1_2(false);
+        }
+
         performIngrFavorites();
 
         adapter = new IngredientFavoritesAdapter(this, ingrFavorites);
@@ -117,6 +123,21 @@ public class IngredientFavoritesActivity extends AppCompatActivity {
             }
         }
         adapter.notifyDataSetChanged();
+    }
+
+    public void updateIngredientFavorites() {
+        List<Ingredient> bufferIngredients = ingrFavoritesDB.getAllUnsorted();
+        ingrFavorites = ingrFavoritesDB.getAllIngrFavoritesUnsorted();
+        for (int i = 0; i < bufferIngredients.size(); i++) {
+            Ingredient ing = bufferIngredients.get(i);
+            for (int j = 0; j < ingrFavorites.size(); j++) {
+                if (ing.getIngredient().equals(ingrFavorites.get(j).getIngredient())){
+                    IngredientFavorites newIngrFav = new IngredientFavorites(ing.getIngredient(),
+                            ing.getImage(), ing.getState(), ing.getCheckboxState());
+                    ingrFavoritesDB.copyOrUpdateIngrFavorites(newIngrFav);
+                }
+            }
+        }
     }
 
     @Override
