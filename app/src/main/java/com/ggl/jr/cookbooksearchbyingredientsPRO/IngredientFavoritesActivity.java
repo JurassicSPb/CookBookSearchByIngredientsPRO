@@ -30,7 +30,7 @@ public class IngredientFavoritesActivity extends AppCompatActivity {
         setContentView(R.layout.ingr_favorites_gridview);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        if (Metrics.smallestWidth()>600) {
+        if (Metrics.smallestWidth() > 600) {
             toolbar.setNavigationIcon(R.drawable.ic_arrow_back_tablets);
         } else {
             toolbar.setNavigationIcon(R.drawable.ic_arrow_back_phones);
@@ -56,9 +56,9 @@ public class IngredientFavoritesActivity extends AppCompatActivity {
         ingrFavoritesDB = new IngredientDatabase();
 
         MyPreferences preferences = new MyPreferences(this);
-        if (preferences.getFlagIngrFavV1_6()) {
+        if (preferences.getFlagIngrFavV1_7()) {
             updateIngredientFavorites();
-            preferences.setFlagIngrFavV1_6(false);
+            preferences.setFlagIngrFavV1_7(false);
         }
 
         performIngrFavorites();
@@ -126,16 +126,13 @@ public class IngredientFavoritesActivity extends AppCompatActivity {
     }
 
     public void updateIngredientFavorites() {
-        List<Ingredient> bufferIngredients = ingrFavoritesDB.getAllUnsorted();
         ingrFavorites = ingrFavoritesDB.getAllIngrFavoritesUnsorted();
-        for (int i = 0; i < bufferIngredients.size(); i++) {
-            Ingredient ing = bufferIngredients.get(i);
-            for (int j = 0; j < ingrFavorites.size(); j++) {
-                if (ing.getIngredient().equals(ingrFavorites.get(j).getIngredient())){
-                    IngredientFavorites newIngrFav = new IngredientFavorites(ing.getIngredient(),
-                            ing.getImage(), ing.getState(), ing.getCheckboxState());
-                    ingrFavoritesDB.copyOrUpdateIngrFavorites(newIngrFav);
-                }
+        for (int i = 0; i < ingrFavorites.size(); i++) {
+            Ingredient ingredient = ingrFavoritesDB.getIngredientByName(ingrFavorites.get(i).getIngredient());
+            if (ingredient != null) {
+                IngredientFavorites ingredientFavorite = new IngredientFavorites(ingredient.getIngredient(),
+                        ingredient.getImage(), ingredient.getState(), ingredient.getCheckboxState());
+                ingrFavoritesDB.copyOrUpdateIngrFavorites(ingredientFavorite);
             }
         }
     }

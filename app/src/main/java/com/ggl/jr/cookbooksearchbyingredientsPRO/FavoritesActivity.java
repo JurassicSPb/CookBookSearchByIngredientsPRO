@@ -10,6 +10,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.ggl.jr.cookbooksearchbyingredientsPRO.storage.IngredientDatabase;
+import com.ggl.jr.cookbooksearchbyingredientsPRO.storage.MyPreferences;
+
 import java.util.List;
 
 /**
@@ -43,6 +45,7 @@ public class FavoritesActivity extends AppCompatActivity {
 
         }
     };
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,10 +53,17 @@ public class FavoritesActivity extends AppCompatActivity {
         setContentView(R.layout.favorites_recyclerview);
 
         recipeDB = new IngredientDatabase();
+
+        MyPreferences preferences = new MyPreferences(this);
+        if (preferences.getFlagRecipesFavV1_7()) {
+            updateFavorites();
+            preferences.setFlagRecipesFavV1_7(false);
+        }
+
         performFavorites();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        if (Metrics.smallestWidth()>600) {
+        if (Metrics.smallestWidth() > 600) {
             toolbar.setNavigationIcon(R.drawable.ic_arrow_back_tablets);
         } else {
             toolbar.setNavigationIcon(R.drawable.ic_arrow_back_phones);
@@ -70,13 +80,26 @@ public class FavoritesActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
+    private void updateFavorites() {
+        favorites = recipeDB.getAllFavorites();
+        for (int i = 0; i < favorites.size(); i++) {
+            Recipe recipe = recipeDB.getRecipeById(favorites.get(i).getId());
+            if (recipe != null) {
+                Favorites favorite = new Favorites(recipe.getId(), recipe.getName(),
+                        recipe.getIngredient(), recipe.getCategory(), recipe.getDescription(),
+                        recipe.getCalories(), recipe.getImage());
+                recipeDB.copyOrUpdateFavorites(favorite);
+            }
+        }
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
         adapter.notifyDataSetChanged();
     }
 
-    private void performFavorites(){
+    private void performFavorites() {
         favorites = recipeDB.getAllFavorites();
     }
 
