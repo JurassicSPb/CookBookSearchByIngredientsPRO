@@ -7,7 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.Toast;
 
 import com.ggl.jr.cookbooksearchbyingredientsPRO.storage.IngredientDatabase;
 
@@ -24,6 +26,7 @@ import java.util.List;
 public class RecipeListActivity extends AppCompatActivity {
     private RecipeListAdapter adapter;
     private IngredientDatabase recipeDB;
+    private List<RecipeCount> newRecipes = new ArrayList<>();
     private OnListItemClickListener clickListener = new OnListItemClickListener() {
         @Override
         public void onClick(View v, int position) {
@@ -44,7 +47,6 @@ public class RecipeListActivity extends AppCompatActivity {
             intent.putExtra("calories", calories);
             intent.putExtra("category", category);
             startActivity(intent);
-
         }
     };
 
@@ -62,7 +64,7 @@ public class RecipeListActivity extends AppCompatActivity {
         recipeDB = new IngredientDatabase();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        if (Metrics.smallestWidth()>600) {
+        if (Metrics.smallestWidth() > 600) {
             toolbar.setNavigationIcon(R.drawable.ic_arrow_back_tablets);
         } else {
             toolbar.setNavigationIcon(R.drawable.ic_arrow_back_phones);
@@ -78,11 +80,15 @@ public class RecipeListActivity extends AppCompatActivity {
         adapter = new RecipeListAdapter(performRecipes(), clickListener);
         recyclerView.setAdapter(adapter);
 
+        if (newRecipes.isEmpty()) {
+            Toast toast = Toast.makeText(getApplication(), R.string.recipe_list_empty, Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
+        }
     }
 
     private List<RecipeCount> performRecipes() {
-        List<Recipe> recipes = recipeDB.getRecipe(SelectedIngredient.getSelectedIngredient());
-        List<RecipeCount> newRecipes = new ArrayList<>();
+        List<Recipe> recipes = recipeDB.getRecipe(recipeDB.getAllIngrStopUnsorted(), SelectedIngredient.getSelectedIngredient());
         int count;
         for (int i = 0; i < recipes.size(); i++) {
             count = 0;
@@ -97,11 +103,11 @@ public class RecipeListActivity extends AppCompatActivity {
         return newRecipes;
     }
 
-    public Comparator <RecipeCount> sortByCountAndCategory() {
+    public Comparator<RecipeCount> sortByCountAndCategory() {
         return (o1, o2) -> {
-            if (o2.getCount()==o1.getCount()) {
+            if (o2.getCount() == o1.getCount()) {
                 return o1.getRecipe().getCategory().compareTo(o2.getRecipe().getCategory());
-            } else if (o2.getCount()>o1.getCount()){
+            } else if (o2.getCount() > o1.getCount()) {
                 return 1;
             }
             return -1;

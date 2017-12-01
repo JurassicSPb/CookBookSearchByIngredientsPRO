@@ -118,14 +118,12 @@ public class IngedientTablayoutActivity extends AppCompatActivity implements Nav
         }
 
         ingredientDB = new IngredientDatabase();
-//            deleteIngredients();
-//            deleteRecipes();
 
-        if (preferences.getFlagIngrCatV1_7()) {
+        if (preferences.getFlagIngrCatV1_8()) {
             createIngredientsRU();
             createCategoryTablesRU();
             createCategoriesRU();
-            preferences.setFlagIngrCatV1_7(false);
+            preferences.setFlagIngrCatV1_8(false);
         }
 
         if (preferences.getFlag()) {
@@ -162,6 +160,12 @@ public class IngedientTablayoutActivity extends AppCompatActivity implements Nav
             createRecipes("ver1_7");
             preferences.setFlagRecipesV1_7(false);
         }
+
+        if (preferences.getFlagRecipesV1_8()) {
+            createRecipes("ver1_8");
+            preferences.setFlagRecipesV1_8(false);
+        }
+
 
         performCategoryTables();
 
@@ -223,7 +227,7 @@ public class IngedientTablayoutActivity extends AppCompatActivity implements Nav
             if (preferences.getFlagRating()) {
                 new CustomDialog6(this).show();
             } else
-            finish();
+                finish();
         } else if (id == R.id.fr4) {
             intent = new Intent(this, WeightsAndMeasures.class);
             startActivity(intent);
@@ -242,6 +246,9 @@ public class IngedientTablayoutActivity extends AppCompatActivity implements Nav
         } else if (id == R.id.fr9) {
             Uri address = Uri.parse("https://vk.com/club146092602");
             intent = new Intent(Intent.ACTION_VIEW, address);
+            startActivity(intent);
+        } else if (id == R.id.fr10) {
+            intent = new Intent(this, IngredientStopActivity.class);
             startActivity(intent);
         }
         drawer.closeDrawer(GravityCompat.START);
@@ -821,7 +828,7 @@ public class IngedientTablayoutActivity extends AppCompatActivity implements Nav
     }
 
     private void createCategoriesRU() {
-        ArrayList <Categories> bufferCategories = new ArrayList<>();
+        ArrayList<Categories> bufferCategories = new ArrayList<>();
         bufferCategories.add(new Categories("Hовое", R.drawable.novoe));
         bufferCategories.add(new Categories("Блины и оладьи", R.drawable.pancaces));
         bufferCategories.add(new Categories("Блюда для мультиварки", R.drawable.multi));
@@ -899,11 +906,9 @@ public class IngedientTablayoutActivity extends AppCompatActivity implements Nav
         assert drawer != null;
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        }
-        else if (preferences.getFlagRating()) {
+        } else if (preferences.getFlagRating()) {
             new CustomDialog6(this).show();
-        }
-        else {
+        } else {
             super.onBackPressed();
         }
     }
