@@ -15,6 +15,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,12 +25,14 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import io.realm.RealmList;
+
 /**
  * Created by Мария on 13.12.2016.
  */
 
 public class RecipeDetailActivity extends AppCompatActivity {
-    private IngredientDatabase favoritesDB;
+    private IngredientDatabase ingredientDB;
     private List<Favorites> favorites;
     private int id;
     private String names;
@@ -56,7 +59,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
             category = savedInstanceState.getString("category");
         }
 
-        favoritesDB = new IngredientDatabase();
+        ingredientDB = new IngredientDatabase();
 
         Intent intent = getIntent();
 
@@ -67,7 +70,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
         names = intent.getStringExtra("name");
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        if (Metrics.smallestWidth() > 600) {
+        if (Metrics.smallestWidth() >= 600) {
             toolbar.setNavigationIcon(R.drawable.ic_arrow_back_tablets);
         } else {
             toolbar.setNavigationIcon(R.drawable.ic_arrow_back_phones);
@@ -78,7 +81,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
         getSupportActionBar().setTitle(names);
 
-        favorites = favoritesDB.getFavorite(id);
+        favorites = ingredientDB.getFavorite(id);
 
         ImageView largeImage = (ImageView) findViewById(R.id.large_image);
         image = intent.getStringExtra("photo");
@@ -113,13 +116,38 @@ public class RecipeDetailActivity extends AppCompatActivity {
         calorie.setTypeface(typefaceCalorieAndIngredient);
 
         category = intent.getStringExtra("category");
+
+        Button shoppingCart = (Button) findViewById(R.id.add_to_cart);
+        shoppingCart.setOnClickListener(v -> {
+            List<IngredientToBuy> ingredientToBuy = ingredientDB.getAllIngrToBuy();
+            if (ingredientToBuy.size() < 50) {
+                RealmList<IngredientsFromRecipe> ingredientsFromRecipes = new RealmList<>();
+                String[] parts = ingredients.split("\n");
+                for (String part : parts) {
+                    if (!part.equals("")) {
+                        ingredientsFromRecipes.add(new IngredientsFromRecipe(id, part, 0));
+                    }
+                }
+
+                IngredientToBuy ingredientFromCart = new IngredientToBuy(names, id, ingredientsFromRecipes);
+                ingredientDB.copyIngredientToCart(ingredientFromCart, id);
+
+                Toast toast = Toast.makeText(this, R.string.toast_shopping_cart, Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
+            } else {
+                Toast toast = Toast.makeText(getApplication(), R.string.no_more_then_50_records, Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
+            }
+        });
     }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         menu.clear();
         MenuInflater inflater = getMenuInflater();
-        if (Metrics.smallestWidth() > 600) {
+        if (Metrics.smallestWidth() >= 600) {
             inflater.inflate(R.menu.toolbar_buttons_third_activity_tablets, menu);
         } else {
             inflater.inflate(R.menu.toolbar_buttons_third_activity_phones, menu);
@@ -128,7 +156,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
         MenuItem item = menu.findItem(R.id.item4);
 
         if (favorites.size() == 1) {
-            if (Metrics.smallestWidth() > 600) {
+            if (Metrics.smallestWidth() >= 600) {
                 item.setIcon(R.drawable.ic_favorites_selected_tablets);
             } else {
                 item.setIcon(R.drawable.ic_favorites_selected_phones);
@@ -145,7 +173,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.item4:
                 if (favorites.size() == 0) {
-                    if (Metrics.smallestWidth() > 600) {
+                    if (Metrics.smallestWidth() >= 600) {
                         myDrawable = ContextCompat.getDrawable(this, R.drawable.ic_favorites_selected_tablets);
                         item.setIcon(myDrawable);
                     } else {
@@ -154,15 +182,15 @@ public class RecipeDetailActivity extends AppCompatActivity {
                     }
 
                     Favorites newFavorites = new Favorites(id, names, ingredients, category, descriptions, calories, image);
-                    favoritesDB.copyOrUpdateFavorites(newFavorites);
+                    ingredientDB.copyOrUpdateFavorites(newFavorites);
 
                     toast = Toast.makeText(this, R.string.toast_favorites, Toast.LENGTH_SHORT);
                     toast.setGravity(Gravity.CENTER, 0, 0);
                     toast.show();
                 } else if (favorites.size() == 1) {
-                    favoritesDB.deleteFavoritePosition(id);
+                    ingredientDB.deleteFavoritePosition(id);
 
-                    if (Metrics.smallestWidth() > 600) {
+                    if (Metrics.smallestWidth() >= 600) {
                         myDrawable = ContextCompat.getDrawable(this, R.drawable.ic_favourites_tablets);
                         item.setIcon(myDrawable);
                     } else {
@@ -211,7 +239,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        favoritesDB.close();
+        ingredientDB.close();
         super.onDestroy();
     }
 }
