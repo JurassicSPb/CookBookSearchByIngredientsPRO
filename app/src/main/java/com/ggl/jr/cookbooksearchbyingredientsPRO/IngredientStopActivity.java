@@ -42,14 +42,14 @@ public class IngredientStopActivity extends AppCompatActivity {
         ingredientStopDB = new IngredientDatabase();
 
         MyPreferences preferences = new MyPreferences(this);
-        if (preferences.getFlagStopListV1_9()) {
+        if (preferences.getFlagStopListV2_0()) {
             updateStopList();
-            preferences.setFlagStopListV1_9(false);
+            preferences.setFlagStopListV2_0(false);
         }
 
         ingrStop = ingredientStopDB.getAllIngrStopSorted();
 
-        IngredientStopAdapter adapter = new IngredientStopAdapter(this, ingrStop);
+        IngredientStopAdapter adapter = new IngredientStopAdapter(this, ingrStop, ingredientStopDB);
         gridview.setAdapter(adapter);
 
     }
