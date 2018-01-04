@@ -52,6 +52,7 @@ public class IngedientTablayoutActivity extends AppCompatActivity implements Nav
     private DrawerLayout drawer;
     private Intent intent;
     private MyPreferences preferences;
+    private CustomDialog7 dialog7;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -119,11 +120,11 @@ public class IngedientTablayoutActivity extends AppCompatActivity implements Nav
 
         ingredientDB = new IngredientDatabase();
 
-        if (preferences.getFlagIngrCatV2_0()) {
+        if (preferences.getFlagIngrCatV2_1()) {
             createIngredientsRU();
             createCategoryTablesRU();
             createCategoriesRU();
-            preferences.setFlagIngrCatV2_0(false);
+            preferences.setFlagIngrCatV2_1(false);
         }
 
         if (preferences.getFlag()) {
@@ -174,6 +175,11 @@ public class IngedientTablayoutActivity extends AppCompatActivity implements Nav
         if (preferences.getFlagRecipesV2_0()) {
             createRecipes("ver2_0");
             preferences.setFlagRecipesV2_0(false);
+        }
+
+        if (preferences.getFlagRecipesV2_1()) {
+            createRecipes("ver2_1");
+            preferences.setFlagRecipesV2_1(false);
         }
 
         performCategoryTables();
@@ -288,7 +294,8 @@ public class IngedientTablayoutActivity extends AppCompatActivity implements Nav
                 }
                 break;
             case R.id.item2:
-                new CustomDialog7(this).show();
+                dialog7 = new CustomDialog7(this);
+                dialog7.show();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -941,6 +948,9 @@ public class IngedientTablayoutActivity extends AppCompatActivity implements Nav
     @Override
     protected void onDestroy() {
         ingredientDB.close();
+        if (dialog7 != null) {
+            dialog7.dismiss();
+        }
         super.onDestroy();
     }
 }
