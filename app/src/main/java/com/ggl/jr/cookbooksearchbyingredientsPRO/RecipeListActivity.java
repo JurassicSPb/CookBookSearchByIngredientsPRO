@@ -103,43 +103,50 @@ public class RecipeListActivity extends AppCompatActivity {
     }
 
     private void performRecipes() {
-        IngredientDatabase recipeDB = new IngredientDatabase();
+        IngredientDatabase recipeDB = null;
 
-        List<Recipe> recipes = recipeDB.getRecipe(recipeDB.getAllIngrStopUnsorted(), SelectedIngredient.getSelectedIngredient());
-        int count;
-        for (int i = 0; i < recipes.size(); i++) {
-            count = 0;
-            for (int k = 0; k < SelectedIngredient.getSelectedIngredient().size(); k++) {
-                if (recipes.get(i).getIngredient().contains(SelectedIngredient.getSelectedIngredient().get(k))) {
-                    count++;
+        try {
+            recipeDB = new IngredientDatabase();
+
+            List<Recipe> recipes = recipeDB.getRecipe(recipeDB.getAllIngrStopUnsorted(), SelectedIngredient.getSelectedIngredient());
+            int count;
+            for (int i = 0; i < recipes.size(); i++) {
+                count = 0;
+                for (int k = 0; k < SelectedIngredient.getSelectedIngredient().size(); k++) {
+                    if (recipes.get(i).getIngredient().contains(SelectedIngredient.getSelectedIngredient().get(k))) {
+                        count++;
+                    }
                 }
+                Recipe r = recipes.get(i);
+                newRecipes.add(new RecipeCount(count, r.getId(), r.getName(), r.getIngredient(), r.getCategory(),
+                        r.getDescription(), r.getImage(), r.getCalories()));
             }
-            Recipe r = recipes.get(i);
-            newRecipes.add(new RecipeCount(count, r.getId(), r.getName(), r.getIngredient(), r.getCategory(),
-                    r.getDescription(), r.getImage(), r.getCalories()));
+            Collections.sort(newRecipes, sortByCountAndCategory());
+        } catch (Exception e){
+            e.printStackTrace();
+        } finally {
+            if (recipeDB != null) {
+                recipeDB.close();
+            }
         }
-        Collections.sort(newRecipes, sortByCountAndCategory());
+            callback.callBackCall();
+        }
 
-        recipeDB.close();
+        public Comparator<RecipeCount> sortByCountAndCategory () {
+            return (o1, o2) -> {
+                if (o2.getCount() == o1.getCount()) {
+                    return o1.getCategory().compareTo(o2.getCategory());
+                } else if (o2.getCount() > o1.getCount()) {
+                    return 1;
+                }
+                return -1;
+            };
+        }
 
-        callback.callBackCall();
+        @Override
+        protected void onSaveInstanceState (Bundle outState){
+            super.onSaveInstanceState(outState);
+            outState.putStringArrayList("ingr", SelectedIngredient.getSelectedIngredient());
+            outState.putStringArrayList("image", SelectedIngredient.getSelectedImage());
+        }
     }
-
-    public Comparator<RecipeCount> sortByCountAndCategory() {
-        return (o1, o2) -> {
-            if (o2.getCount() == o1.getCount()) {
-                return o1.getCategory().compareTo(o2.getCategory());
-            } else if (o2.getCount() > o1.getCount()) {
-                return 1;
-            }
-            return -1;
-        };
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putStringArrayList("ingr", SelectedIngredient.getSelectedIngredient());
-        outState.putStringArrayList("image", SelectedIngredient.getSelectedImage());
-    }
-}
