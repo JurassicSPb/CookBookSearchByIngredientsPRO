@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 
@@ -33,7 +33,7 @@ public class RecipeListActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private RecipeListAdapter adapter;
     private List<RecipeCount> newRecipes = new ArrayList<>();
-    private Executor executor = Executors.newSingleThreadExecutor();
+    private ExecutorService executor = Executors.newSingleThreadExecutor();
     private OnListItemClickListener clickListener = new OnListItemClickListener() {
         @Override
         public void onClick(View v, int position) {
@@ -122,31 +122,39 @@ public class RecipeListActivity extends AppCompatActivity {
                         r.getDescription(), r.getImage(), r.getCalories()));
             }
             Collections.sort(newRecipes, sortByCountAndCategory());
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             if (recipeDB != null) {
                 recipeDB.close();
             }
         }
-            callback.callBackCall();
-        }
-
-        public Comparator<RecipeCount> sortByCountAndCategory () {
-            return (o1, o2) -> {
-                if (o2.getCount() == o1.getCount()) {
-                    return o1.getCategory().compareTo(o2.getCategory());
-                } else if (o2.getCount() > o1.getCount()) {
-                    return 1;
-                }
-                return -1;
-            };
-        }
-
-        @Override
-        protected void onSaveInstanceState (Bundle outState){
-            super.onSaveInstanceState(outState);
-            outState.putStringArrayList("ingr", SelectedIngredient.getSelectedIngredient());
-            outState.putStringArrayList("image", SelectedIngredient.getSelectedImage());
-        }
+        callback.callBackCall();
     }
+
+    public Comparator<RecipeCount> sortByCountAndCategory() {
+        return (o1, o2) -> {
+            if (o2.getCount() == o1.getCount()) {
+                return o1.getCategory().compareTo(o2.getCategory());
+            } else if (o2.getCount() > o1.getCount()) {
+                return 1;
+            }
+            return -1;
+        };
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putStringArrayList("ingr", SelectedIngredient.getSelectedIngredient());
+        outState.putStringArrayList("image", SelectedIngredient.getSelectedImage());
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (!executor.isShutdown()) {
+            executor.shutdown();
+        }
+        super.onDestroy();
+    }
+}
