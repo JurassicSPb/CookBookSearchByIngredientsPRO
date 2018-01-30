@@ -1,5 +1,7 @@
 package com.ggl.jr.cookbooksearchbyingredientsPRO.storage;
 
+import android.content.Context;
+
 import com.ggl.jr.cookbooksearchbyingredientsPRO.Categories;
 import com.ggl.jr.cookbooksearchbyingredientsPRO.CategoryTable;
 import com.ggl.jr.cookbooksearchbyingredientsPRO.Favorites;
@@ -28,6 +30,19 @@ public class IngredientDatabase {
     private Realm realm;
 
     public IngredientDatabase() {
+        init();
+    }
+
+    public IngredientDatabase(Context context) {
+        try {
+            init();
+        } catch (IllegalStateException e) {
+            Realm.init(context);
+            init();
+        }
+    }
+
+    private void init() {
         RealmConfiguration configuration = new RealmConfiguration.Builder()
                 .name("ingredient_db")
                 .schemaVersion(2)
