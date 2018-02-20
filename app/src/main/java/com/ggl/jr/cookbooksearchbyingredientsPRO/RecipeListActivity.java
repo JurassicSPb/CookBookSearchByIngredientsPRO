@@ -10,6 +10,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -32,6 +36,10 @@ public class RecipeListActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
     private RecipeListAdapter adapter;
+    private MenuItem menuItem;
+    private String menuItemTitle = "Все";
+    private volatile boolean menuIsLoaded = false;
+    private volatile boolean dataIsLoaded = false;
     private List<RecipeCount> newRecipes = new ArrayList<>();
     private ExecutorService executor = Executors.newSingleThreadExecutor();
     private OnListItemClickListener clickListener = new OnListItemClickListener() {
@@ -57,7 +65,7 @@ public class RecipeListActivity extends AppCompatActivity {
         }
     };
     private OnDataReadyCallback callback = () -> runOnUiThread(() -> {
-        adapter = new RecipeListAdapter(newRecipes, clickListener);
+        adapter = new RecipeListAdapter(newRecipes, clickListener, this);
         recyclerView.setAdapter(adapter);
 
         progressBar.setVisibility(View.GONE);
@@ -66,6 +74,17 @@ public class RecipeListActivity extends AppCompatActivity {
             Toast toast = Toast.makeText(getApplication(), R.string.recipe_list_empty, Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
+        } else {
+            dataIsLoaded = true;
+
+            if (!menuItemTitle.equals(getResources().getString(R.string.all))) {
+                adapter.getFilter().filter(menuItemTitle);
+            }
+
+            if (menuItem != null && menuIsLoaded) {
+                menuItem.setVisible(true);
+            }
+
         }
     });
 
@@ -78,6 +97,7 @@ public class RecipeListActivity extends AppCompatActivity {
         if (savedInstanceState != null) {
             SelectedIngredient.copyAllIngr(savedInstanceState.getStringArrayList("ingr"));
             SelectedIngredient.copyAllImage(savedInstanceState.getStringArrayList("image"));
+            menuItemTitle = savedInstanceState.getString("menuItemTitle");
         }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -142,8 +162,50 @@ public class RecipeListActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.recipelist_menu_filter, menu);
+
+        menuItem = menu.getItem(0);
+        SubMenu subMenuItem = menuItem.getSubMenu();
+
+        for (int i = 0; i < subMenuItem.size(); i++) {
+            MenuItem item = subMenuItem.getItem(i);
+            if (item.getTitle().equals(menuItemTitle)) {
+                item.setChecked(true);
+                break;
+            }
+        }
+
+        menuIsLoaded = true;
+
+        if (dataIsLoaded) {
+            menuItem.setVisible(true);
+        }
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() != R.id.filter_item && !item.isChecked()) {
+            item.setChecked(true);
+            menuItemTitle = item.getTitle().toString();
+
+            if (menuItemTitle.equals(getResources().getString(R.string.all))) {
+                adapter.getFilter().filter(null);
+            } else {
+                adapter.getFilter().filter(menuItemTitle);
+            }
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        outState.putString("menuItemTitle", menuItemTitle);
         outState.putStringArrayList("ingr", SelectedIngredient.getSelectedIngredient());
         outState.putStringArrayList("image", SelectedIngredient.getSelectedImage());
     }
