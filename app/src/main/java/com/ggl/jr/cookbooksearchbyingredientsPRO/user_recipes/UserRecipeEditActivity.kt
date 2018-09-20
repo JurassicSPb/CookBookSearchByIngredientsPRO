@@ -16,6 +16,7 @@ import android.widget.Toast
 import com.ggl.jr.cookbooksearchbyingredientsPRO.Metrics
 import com.ggl.jr.cookbooksearchbyingredientsPRO.R
 import com.ggl.jr.cookbooksearchbyingredientsPRO.extensions.isClickableAndFocusable
+import com.ggl.jr.cookbooksearchbyingredientsPRO.extensions.setMarquee
 import com.ggl.jr.cookbooksearchbyingredientsPRO.extensions.visible
 import com.ggl.jr.cookbooksearchbyingredientsPRO.helper.DialogHelper
 import com.ggl.jr.cookbooksearchbyingredientsPRO.helper.DialogHelper.Companion.ACTION_OPEN_OPTIONS
@@ -127,12 +128,10 @@ class UserRecipeEditActivity :
             }
             addPhotoContainer.isClickableAndFocusable(false)
 
-            supportActionBar?.setTitle(R.string.user_recipe_view_mode)
+            toolbar.setMarquee(R.string.user_recipe_view_mode)
         }
 
-        if (editMode) {
-            supportActionBar?.setTitle(R.string.user_recipe_edit_mode)
-        }
+        if (editMode) supportActionBar?.setTitle(R.string.user_recipe_edit_mode)
     }
 
     override fun onPositiveButtonClicked(action: Int) {
