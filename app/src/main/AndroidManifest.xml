@@ -2,86 +2,66 @@
     package="com.ggl.jr.cookbooksearchbyingredientsPRO"
     android:installLocation="auto">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name="com.ggl.jr.cookbooksearchbyingredientsPRO.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <activity android:name="com.ggl.jr.cookbooksearchbyingredientsPRO.IngredientDetailActivity" />
 
-        <activity android:name="com.ggl.jr.cookbooksearchbyingredientsPRO.IngredientDetailActivity">
+        <activity android:name="com.ggl.jr.cookbooksearchbyingredientsPRO.RecipeListActivity" />
 
-        </activity>
+        <activity
+            android:name="com.ggl.jr.cookbooksearchbyingredientsPRO.RecipeDetailActivity"
+            android:theme="@style/DetailRecipeTheme" />
 
-        <activity android:name="com.ggl.jr.cookbooksearchbyingredientsPRO.RecipeListActivity">
+        <activity android:name="com.ggl.jr.cookbooksearchbyingredientsPRO.FavoritesActivity" />
 
-        </activity>
+        <activity android:name="com.ggl.jr.cookbooksearchbyingredientsPRO.FullListActivity" />
 
-        <activity android:name="com.ggl.jr.cookbooksearchbyingredientsPRO.RecipeDetailActivity"
-            android:theme="@style/DetailRecipeTheme">
+        <activity android:name="com.ggl.jr.cookbooksearchbyingredientsPRO.nav_drawer_extras.WeightsAndMeasures" />
 
-        </activity>
+        <activity android:name="com.ggl.jr.cookbooksearchbyingredientsPRO.nav_drawer_extras.CookingTime" />
 
-        <activity android:name="com.ggl.jr.cookbooksearchbyingredientsPRO.FavoritesActivity">
+        <activity
+            android:name="com.ggl.jr.cookbooksearchbyingredientsPRO.IngedientTablayoutActivity"
+            android:configChanges="orientation|screenSize" />
 
-        </activity>
+        <activity
+            android:name="com.ggl.jr.cookbooksearchbyingredientsPRO.ProgressBarActivity"
+            android:theme="@style/ProgressBarTheme" />
 
-        <activity android:name="com.ggl.jr.cookbooksearchbyingredientsPRO.FullListActivity">
+        <activity android:name="com.ggl.jr.cookbooksearchbyingredientsPRO.CategoriesActivity" />
 
-        </activity>
+        <activity android:name="com.ggl.jr.cookbooksearchbyingredientsPRO.CategoriesListActivity" />
 
-        <activity android:name="com.ggl.jr.cookbooksearchbyingredientsPRO.nav_drawer_extras.WeightsAndMeasures">
+        <activity android:name="com.ggl.jr.cookbooksearchbyingredientsPRO.IngredientFavoritesActivity" />
 
-        </activity>
+        <activity
+            android:name="com.ggl.jr.cookbooksearchbyingredientsPRO.IngredientToBuyActivity"
+            android:windowSoftInputMode="adjustResize" />
 
-        <activity android:name="com.ggl.jr.cookbooksearchbyingredientsPRO.nav_drawer_extras.CookingTime">
+        <activity android:name="com.ggl.jr.cookbooksearchbyingredientsPRO.IngredientStopActivity" />
 
-        </activity>
+        <activity android:name=".user_recipes.UserRecipeListActivity" />
 
-        <activity android:name="com.ggl.jr.cookbooksearchbyingredientsPRO.IngedientTablayoutActivity"
-            android:configChanges="orientation|screenSize">
-        </activity>
+        <activity android:name=".user_recipes.UserRecipeEditActivity" />
 
-        <activity android:name="com.ggl.jr.cookbooksearchbyingredientsPRO.ProgressBarActivity"
-            android:theme="@style/ProgressBarTheme">
-
-        </activity>
-
-        <activity android:name="com.ggl.jr.cookbooksearchbyingredientsPRO.CategoriesActivity">
-
-        </activity>
-
-        <activity android:name="com.ggl.jr.cookbooksearchbyingredientsPRO.CategoriesListActivity">
-
-        </activity>
-
-        <activity android:name="com.ggl.jr.cookbooksearchbyingredientsPRO.IngredientFavoritesActivity">
-
-        </activity>
-
-        <activity android:name="com.ggl.jr.cookbooksearchbyingredientsPRO.IngredientToBuyActivity"
-            android:windowSoftInputMode="adjustResize">
-
-        </activity>
-
-        <activity android:name="com.ggl.jr.cookbooksearchbyingredientsPRO.IngredientStopActivity" >
-
-        </activity>
-
-
-        <activity android:name="com.ggl.jr.cookbooksearchbyingredientsPRO.LoadingScreenActivity"
+        <activity
+            android:name="com.ggl.jr.cookbooksearchbyingredientsPRO.LoadingScreenActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
