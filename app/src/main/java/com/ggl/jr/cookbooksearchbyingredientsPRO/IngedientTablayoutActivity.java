@@ -167,11 +167,11 @@ public class IngedientTablayoutActivity extends AppCompatActivity implements Nav
     }
 
     private void initData() {
-        if (preferences.getFlagIngrCatV2_65()) {
+        if (preferences.getFlagIngrCatV2_7()) {
             createIngredientsRU();
             createCategoryTablesRU();
             createCategoriesRU();
-            preferences.setFlagIngrCatV2_65(false);
+            preferences.setFlagIngrCatV2_7(false);
         }
 
         if (preferences.getFlag()) {
@@ -255,6 +255,11 @@ public class IngedientTablayoutActivity extends AppCompatActivity implements Nav
             ingredientDB.deleteIngredientStopByName("икра красная");
             createRecipes("ver2_6");
             preferences.setFlagRecipesV2_6(false);
+        }
+
+        if (preferences.getFlagRecipesV2_7()) {
+            createRecipes("ver2_7");
+            preferences.setFlagRecipesV2_7(false);
         }
     }
 
