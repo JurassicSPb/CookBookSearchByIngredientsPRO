@@ -1,9 +1,9 @@
 package com.ggl.jr.cookbooksearchbyingredientsPRO;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.view.Gravity;
 import android.widget.GridView;
 import android.widget.Toast;
@@ -56,9 +56,9 @@ public class IngredientFavoritesActivity extends AppCompatActivity {
         ingrFavoritesDB = new IngredientDatabase();
 
         MyPreferences preferences = new MyPreferences(this);
-        if (preferences.getFlagIngrFavV2_85()) {
+        if (preferences.getFlagIngrFavV2_9()) {
             updateIngredientFavorites();
-            preferences.setFlagIngrFavV2_85(false);
+            preferences.setFlagIngrFavV2_9(false);
         }
 
         performIngrFavorites();

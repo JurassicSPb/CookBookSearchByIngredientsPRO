@@ -2,8 +2,8 @@ package com.ggl.jr.cookbooksearchbyingredientsPRO.fragments;
 
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Gravity;
@@ -18,7 +18,6 @@ import android.widget.Toast;
 import com.ggl.jr.cookbooksearchbyingredientsPRO.GridviewImageTextAdapter;
 import com.ggl.jr.cookbooksearchbyingredientsPRO.IngedientTablayoutActivity;
 import com.ggl.jr.cookbooksearchbyingredientsPRO.Ingredient;
-import com.ggl.jr.cookbooksearchbyingredientsPRO.IngredientFavorites;
 import com.ggl.jr.cookbooksearchbyingredientsPRO.R;
 import com.ggl.jr.cookbooksearchbyingredientsPRO.SelectedIngredient;
 import com.ggl.jr.cookbooksearchbyingredientsPRO.storage.IngredientDatabase;

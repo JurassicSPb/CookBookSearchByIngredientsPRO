@@ -3,7 +3,7 @@ package com.ggl.jr.cookbooksearchbyingredientsPRO;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;

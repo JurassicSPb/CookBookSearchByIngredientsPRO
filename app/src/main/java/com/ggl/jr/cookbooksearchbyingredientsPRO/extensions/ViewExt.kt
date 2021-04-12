@@ -1,7 +1,7 @@
 package com.ggl.jr.cookbooksearchbyingredientsPRO.extensions
 
-import android.support.annotation.StringRes
-import android.support.v7.widget.Toolbar
+import androidx.annotation.StringRes
+import androidx.appcompat.widget.Toolbar
 import android.text.TextUtils
 import android.view.View
 import android.widget.TextView

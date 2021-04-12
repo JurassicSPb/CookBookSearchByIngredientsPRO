@@ -1,9 +1,9 @@
 package com.ggl.jr.cookbooksearchbyingredientsPRO;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.widget.GridView;
 
 import com.ggl.jr.cookbooksearchbyingredientsPRO.storage.IngredientDatabase;
@@ -42,9 +42,9 @@ public class IngredientStopActivity extends AppCompatActivity {
         ingredientStopDB = new IngredientDatabase();
 
         MyPreferences preferences = new MyPreferences(this);
-        if (preferences.getFlagStopListV2_85()) {
+        if (preferences.getFlagStopListV2_9()) {
             updateStopList();
-            preferences.setFlagStopListV2_85(false);
+            preferences.setFlagStopListV2_9(false);
         }
 
         ingrStop = ingredientStopDB.getAllIngrStopSorted();

@@ -3,7 +3,7 @@ package com.ggl.jr.cookbooksearchbyingredientsPRO.timer
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageView

@@ -5,16 +5,16 @@ import android.content.res.AssetManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.tabs.TabLayout;
+import androidx.core.view.GravityCompat;
+import androidx.viewpager.widget.ViewPager;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.Menu;
@@ -168,11 +168,11 @@ public class IngedientTablayoutActivity extends AppCompatActivity implements Nav
     }
 
     private void initData() {
-        if (preferences.getFlagIngrCatV2_85()) {
+        if (preferences.getFlagIngrCatV2_9()) {
             createIngredientsRU();
             createCategoryTablesRU();
             createCategoriesRU();
-            preferences.setFlagIngrCatV2_85(false);
+            preferences.setFlagIngrCatV2_9(false);
         }
 
         if (preferences.getFlag()) {
